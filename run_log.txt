@@ -1,0 +1,33 @@
+fig1  N, posterior mean, posterior sd
+    0  0.0000  1.0000
+    1  1.0629  0.7071
+    5  1.7005  0.4082
+   20  1.7303  0.2182
+  sd shrink factor N=0 -> N=20 : 4.58x
+
+fig2
+  forward  KL(p||q) = 0.5552   mu 0.0000  sigma 2.0881
+  reverse  KL(q||p) = 0.6919   mu -2.0000  sigma 0.6000
+  width ratio sigma_fwd / sigma_rev = 3.48
+  cross-check KL(p||q_rev) = 10.4192  KL(q_fwd||p) = 1.2669
+
+fig3
+  points = 500, clusters = 3
+  EM iterations to converge (seed 1) = 108, final log-likelihood = -1396.32
+  points with max responsibility < 0.90 : 162 (32.4%)
+  points with max responsibility < 0.60 : 38 (7.6%)
+  best log-likelihood over all starts = -1396.32
+  init='points': reach best 19/20, worst -1418.87 (gap 22.54)
+  init='wide'  : reach best 14/20, worst -1453.73 (gap 57.41)
+  K-means label error vs truth = 17.8%
+  GMM (argmax resp) error vs truth = 12.8%
+
+fig4
+  2-D: variance along PC1 2.4118, PC2 0.1963 (92.5% / 7.5%)
+  2-D: mean residual to PC1 line = 0.3469, max = 1.4645
+  10-D: explained variance ratio = 0.456, 0.299, 0.216, 0.005, 0.005, 0.004, ...
+  10-D: cumulative at k=3 = 0.9708
+  10-D: reconstruction error k=0 28.983, k=3 0.846 (2.9% of k=0), k=4 0.702, k=10 2.27e-29
+  10-D: drop k=2->3 6.257 vs k=3->4 0.144 (ratio 43.5x)
+  noise floor check: D*NOISE^2 = 1.225
+
