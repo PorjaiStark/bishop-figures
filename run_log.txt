@@ -31,3 +31,24 @@ fig4
   10-D: drop k=2->3 6.257 vs k=3->4 0.144 (ratio 43.5x)
   noise floor check: D*NOISE^2 = 1.225
 
+fig5  Old Faithful, n = 272
+  data mean 3.4878  sd 1.1414  range 1.60-5.10 min
+  mixture fitted by EM, best of 20 starts, log-likelihood -276.36, 32 iterations
+    component 1: weight 0.3484  mean 2.0186  sd 0.2356
+    component 2: weight 0.6516  mean 4.2733  sd 0.4371
+  forward  KL(p||q) = 0.5281   mu 3.4878  sigma 1.1393
+  reverse  KL(q||p) = 0.4271   mu 4.2763  sigma 0.4400
+  cross-check KL(p||q_rev) = 4.0345
+  width ratio sigma_fwd / sigma_rev = 2.59
+
+fig6  Old Faithful, n = 272
+  duration  mean 3.488  sd 1.141 min
+  waiting   mean 70.897  sd 13.595 min  (sd ratio 11.9x)
+  K-means raw vs standardised disagree on 1.5% of points
+  K-means (raw) vs GMM disagree on 1.8% of points
+  GMM component sizes = [ 97 175]  mixing weights = 0.356, 0.644
+  points with max responsibility < 0.90 : 1 (0.4%)
+  points with max responsibility < 0.60 : 0 (0.0%)
+  log-likelihood by K: K=1 -1289.8, K=2 -1130.3, K=3 -1114.4, K=4 -1106.0, K=5 -1101.8, K=6 -1092.4
+  gain K=1->2 159.5, K=2->3 15.8, K=3->4 8.4
+

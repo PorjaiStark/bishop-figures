@@ -1,12 +1,3 @@
-"""Figure 4 - PCA as the projection that loses the least (Bishop DLFC, ch.16).
-
-Left  : 2-D data, the two principal axes, and the residual segments that the
-        first component minimises.
-Right : 10-D data built from a 3-D latent structure plus noise; mean squared
-        reconstruction error as a function of how many components are kept.
-PCA is done by SVD of the centred data matrix, the same route scikit-learn
-takes, rather than by eigendecomposition of the covariance matrix.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -14,19 +5,17 @@ rng = np.random.default_rng(3)
 
 
 def pca(X):
-    """Return components (rows), singular values and the data mean."""
     mean = X.mean(0)
     U, S, Vt = np.linalg.svd(X - mean, full_matrices=False)
     return Vt, S, mean
 
 
-# ---- left panel: 2-D ------------------------------------------------------
 theta = np.deg2rad(30.0)
 R = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
 X2 = (rng.normal(size=(200, 2)) * np.array([1.5, 0.45])) @ R.T + np.array([1.0, 0.5])
 V2, S2, m2 = pca(X2)
 var2 = S2 ** 2 / (len(X2) - 1)
-proj = m2 + np.outer((X2 - m2) @ V2[0], V2[0])       # reconstruction with 1 PC
+proj = m2 + np.outer((X2 - m2) @ V2[0], V2[0])
 resid = np.sqrt(((X2 - proj) ** 2).sum(1))
 
 fig, axes = plt.subplots(1, 2, figsize=(11, 4.0))
@@ -44,7 +33,7 @@ ax.set_xlabel("x1"); ax.set_ylabel("x2")
 ax.set_title(f"PC1 keeps {100*var2[0]/var2.sum():.1f}% of the variance", fontsize=9)
 ax.legend(fontsize=8, frameon=False, loc="upper left")
 
-# ---- right panel: 10-D with 3-D structure ---------------------------------
+
 D, M, N, NOISE = 10, 3, 600, 0.35
 W = rng.normal(size=(D, M))
 Z = rng.normal(size=(N, M))

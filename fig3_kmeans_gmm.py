@@ -1,17 +1,10 @@
-"""Figure 3 - hard assignment (K-means) vs soft assignment (GMM + EM).
-
-Bishop DLFC ch.15. Both algorithms are written out here rather than called
-from a library, so the responsibility matrix is visible. The right-hand panel
-runs EM from 10 random initialisations to show that the log-likelihood has
-more than one stationary point.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 rng = np.random.default_rng(7)
 K, N_INIT = 3, 20
 
-# three clusters with deliberately different shapes and sizes
+
 specs = [((-1.1, 0.0), [[1.60, 0.00], [0.00, 0.22]], 200),
          ((1.1, 0.7), [[0.55, 0.45], [0.45, 0.80]], 200),
          ((0.2, -1.5), [[0.45, 0.00], [0.00, 0.45]], 100)]
@@ -40,8 +33,6 @@ def log_gauss(X, mu, cov):
 
 
 def em(X, K, seed, init="points", iters=300, reg=1e-6):
-    """init='points' picks K data points as means (the usual choice);
-    init='wide' draws them from a broad Gaussian around the data mean."""
     r = np.random.default_rng(seed)
     if init == "points":
         mu = X[r.choice(len(X), K, replace=False)]
@@ -54,10 +45,10 @@ def em(X, K, seed, init="points", iters=300, reg=1e-6):
     for _ in range(iters):
         lg = np.stack([np.log(pi[k]) + log_gauss(X, mu[k], cov[k]) for k in range(K)], 1)
         mx = lg.max(1, keepdims=True)
-        lse = mx[:, 0] + np.log(np.exp(lg - mx).sum(1))      # log-sum-exp
+        lse = mx[:, 0] + np.log(np.exp(lg - mx).sum(1))
         hist.append(float(lse.sum()))
-        resp = np.exp(lg - lse[:, None])                      # E step
-        Nk = resp.sum(0) + 1e-12                              # M step
+        resp = np.exp(lg - lse[:, None])
+        Nk = resp.sum(0) + 1e-12
         pi = Nk / len(X)
         mu = (resp.T @ X) / Nk[:, None]
         cov = np.array([((resp[:, k, None] * (X - mu[k])).T @ (X - mu[k])) / Nk[k]
@@ -80,8 +71,7 @@ axes[0].scatter(X[:, 0], X[:, 1], c=np.array(["tab:blue", "tab:orange", "tab:gre
 axes[0].scatter(mu_km[:, 0], mu_km[:, 1], marker="x", c="black", s=90)
 axes[0].set_title("K-means: hard assignment", fontsize=9)
 
-# order the EM components to match the K-means clusters so the two panels
-# use the same colour for the same part of the data
+
 order = [int(np.argmin(((mu_em - mu_km[k]) ** 2).sum(1))) for k in range(K)]
 order = order if len(set(order)) == K else list(range(K))
 base = np.array([[0.12, 0.47, 0.71], [1.0, 0.5, 0.05], [0.17, 0.63, 0.17]])

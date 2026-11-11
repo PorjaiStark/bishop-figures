@@ -1,23 +1,16 @@
-"""Figure 1 - Bayesian update of a Gaussian mean (Bishop DLFC, ch.2).
-
-Known variance, unknown mean. Prior N(mu0, s0^2) is conjugate, so the
-posterior after N observations is again Gaussian and can be written in
-closed form. The figure sweeps N to show the posterior tightening.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 rng = np.random.default_rng(0)
 
-MU_TRUE, SIGMA = 2.0, 1.0      # data-generating truth, sigma assumed known
-MU0, S0 = 0.0, 1.0             # prior
+MU_TRUE, SIGMA = 2.0, 1.0
+MU0, S0 = 0.0, 1.0
 N_SHOW = [0, 1, 5, 20]
 
 data = rng.normal(MU_TRUE, SIGMA, size=max(N_SHOW))
 
 
 def posterior(n):
-    """Posterior mean and sd of mu after n observations."""
     if n == 0:
         return MU0, S0
     prec = 1.0 / S0**2 + n / SIGMA**2

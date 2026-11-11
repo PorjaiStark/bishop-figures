@@ -1,10 +1,3 @@
-"""Figure 2 - KL divergence is not symmetric (Bishop DLFC, ch.2).
-
-A bimodal p is approximated by a single Gaussian q in two ways:
-  forward  KL(p||q)  -> mean-covering, matches the moments of p
-  reverse  KL(q||p)  -> mode-seeking, collapses onto one mode
-Both divergences are evaluated by numerical integration on a fixed grid.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -17,21 +10,18 @@ def gauss(t, m, s):
     return np.exp(-0.5 * ((t - m) / s) ** 2) / (s * np.sqrt(2 * np.pi))
 
 
-# target: equal mixture of two well separated Gaussians
 p = 0.5 * gauss(x, -2.0, 0.6) + 0.5 * gauss(x, 2.0, 0.6)
 p /= p.sum() * dx
 
 
 def kl(a, b):
-    """KL(a||b) by numerical integration."""
     return float(np.sum(np.where(a > 0, a * np.log((a + EPS) / (b + EPS)), 0.0)) * dx)
 
 
-# forward KL is minimised by moment matching - no search needed
 m_fwd = float(np.sum(x * p) * dx)
 s_fwd = float(np.sqrt(np.sum((x - m_fwd) ** 2 * p) * dx))
 
-# reverse KL has no closed form here, so search a grid of (mu, sigma)
+
 mus = np.linspace(-4, 4, 321)
 sigmas = np.linspace(0.1, 3.0, 291)
 best = (np.inf, None, None)
