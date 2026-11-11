@@ -26,5 +26,3 @@ python3 fig1_bayes.py
 
 Each script writes one figure into `figs/` and prints the numbers it plotted.
 `run_log.txt` is one full run; the seeds are fixed, so it reproduces.
-
-Done for 2103493 ME Portfolio, Mechanical Engineering, Chulalongkorn University.
