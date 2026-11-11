@@ -4,19 +4,18 @@ Plots I made while reading Bishop, *Deep Learning: Foundations and Concepts* —
 chapter 2 and the latent variable chapters up to PCA. Reading the equations
 wasn't enough to tell whether I had understood them, so I drew them myself.
 
+All four use one dataset: `data/faithful.csv`, 272 eruptions of the Old
+Faithful geyser (duration and waiting time in minutes), the `faithful`
+dataset from R.
+
 NumPy and Matplotlib only. EM and PCA are written out by hand instead of
 imported, so the responsibilities and the log-likelihood per iteration are
 actually visible in the code.
 
-- `fig1_bayes.py` — posterior of a Gaussian mean as N grows
-- `fig2_kl.py` — KL(p‖q) against KL(q‖p)
-- `fig3_kmeans_gmm.py` — K-means against a Gaussian mixture, and EM getting stuck
-- `fig4_pca.py` — PCA as the projection with the smallest residual
-- `fig5_kl_faithful.py`, `fig6_gmm_faithful.py` — fig2 and fig3 again on real data
-
-fig1–fig4 use synthetic data with a fixed seed, so I knew the right answer
-beforehand and could tell a bug from a misunderstanding. fig5 and fig6 use
-`data/faithful.csv`: 272 Old Faithful eruptions, the `faithful` dataset from R.
+- `fig1_bayes.py` — posterior of the mean waiting time as eruptions come in
+- `fig2_kl.py` — KL(p‖q) against KL(q‖p), fitting one Gaussian to the durations
+- `fig3_kmeans_gmm.py` — K-means against a Gaussian mixture, and EM getting stuck at K = 3
+- `fig4_pca.py` — PCA before and after standardising, which changes the answer
 
 To run:
 

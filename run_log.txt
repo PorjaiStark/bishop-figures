@@ -1,37 +1,15 @@
-fig1  N, posterior mean, posterior sd
-    0  0.0000  1.0000
-    1  1.0629  0.7071
-    5  1.7005  0.4082
-   20  1.7303  0.2182
-  sd shrink factor N=0 -> N=20 : 4.58x
+fig1  Old Faithful, eruptions longer than 3 min
+  n = 175 of 272, sample mean 79.9886, sd 5.9942 min
+  prior: mean 70.8971 (mean of all eruptions), sd 10.0
+    N =   0   posterior mean 70.8971   sd 10.0000
+    N =   1   posterior mean 78.3295   sd 5.1413
+    N =   5   posterior mean 81.0690   sd 2.5893
+    N =  20   posterior mean 80.6743   sd 1.3285
+    N = 175   posterior mean 79.9699   sd 0.4527
+  sd shrink N=0 -> N=20 : 7.53x, N=0 -> N=175 : 22.09x
+  prior weight left at N=20 : 1.76%
 
-fig2
-  forward  KL(p||q) = 0.5552   mu 0.0000  sigma 2.0881
-  reverse  KL(q||p) = 0.6919   mu -2.0000  sigma 0.6000
-  width ratio sigma_fwd / sigma_rev = 3.48
-  cross-check KL(p||q_rev) = 10.4192  KL(q_fwd||p) = 1.2669
-
-fig3
-  points = 500, clusters = 3
-  EM iterations to converge (seed 1) = 108, final log-likelihood = -1396.32
-  points with max responsibility < 0.90 : 162 (32.4%)
-  points with max responsibility < 0.60 : 38 (7.6%)
-  best log-likelihood over all starts = -1396.32
-  init='points': reach best 19/20, worst -1418.87 (gap 22.54)
-  init='wide'  : reach best 14/20, worst -1453.73 (gap 57.41)
-  K-means label error vs truth = 17.8%
-  GMM (argmax resp) error vs truth = 12.8%
-
-fig4
-  2-D: variance along PC1 2.4118, PC2 0.1963 (92.5% / 7.5%)
-  2-D: mean residual to PC1 line = 0.3469, max = 1.4645
-  10-D: explained variance ratio = 0.456, 0.299, 0.216, 0.005, 0.005, 0.004, ...
-  10-D: cumulative at k=3 = 0.9708
-  10-D: reconstruction error k=0 28.983, k=3 0.846 (2.9% of k=0), k=4 0.702, k=10 2.27e-29
-  10-D: drop k=2->3 6.257 vs k=3->4 0.144 (ratio 43.5x)
-  noise floor check: D*NOISE^2 = 1.225
-
-fig5  Old Faithful, n = 272
+fig2  Old Faithful, n = 272
   data mean 3.4878  sd 1.1414  range 1.60-5.10 min
   mixture fitted by EM, best of 20 starts, log-likelihood -276.36, 32 iterations
     component 1: weight 0.3484  mean 2.0186  sd 0.2356
@@ -41,14 +19,24 @@ fig5  Old Faithful, n = 272
   cross-check KL(p||q_rev) = 4.0345
   width ratio sigma_fwd / sigma_rev = 2.59
 
-fig6  Old Faithful, n = 272
-  duration  mean 3.488  sd 1.141 min
-  waiting   mean 70.897  sd 13.595 min  (sd ratio 11.9x)
+fig3  Old Faithful, n = 272
+  duration mean 3.488 sd 1.141 | waiting mean 70.897 sd 13.595 (sd ratio 11.9x)
   K-means raw vs standardised disagree on 1.5% of points
-  K-means (raw) vs GMM disagree on 1.8% of points
-  GMM component sizes = [ 97 175]  mixing weights = 0.356, 0.644
+  K-means vs mixture disagree on 1.8% of points
+  mixture weights 0.3559 / 0.6441, sizes [ 97 175]
   points with max responsibility < 0.90 : 1 (0.4%)
   points with max responsibility < 0.60 : 0 (0.0%)
+  K = 2: 20 starts all reach -1130.26 (20/20), distinct optima 1
+  K = 3: best -1114.44, worst -1127.07, reach best 2/20, distinct optima 3
   log-likelihood by K: K=1 -1289.8, K=2 -1130.3, K=3 -1114.4, K=4 -1106.0, K=5 -1101.8, K=6 -1092.4
   gain K=1->2 159.5, K=2->3 15.8, K=3->4 8.4
+
+fig4  Old Faithful, n = 272
+  correlation between duration and waiting = 0.9008
+  sd: duration 1.1414 min, waiting 13.5950 min (ratio 11.9x)
+  raw units        : explained 0.9987, 0.0013  PC1 (-0.0755, -0.9971)
+                     mean residual to PC1 0.4007 min
+  standardised     : explained 0.9504, 0.0496  PC1 (-0.7071, -0.7071)
+                     mean residual to PC1 0.2561 sd
+  angle of PC1 to the duration axis: raw -94.33 deg, standardised -135.00 deg
 
